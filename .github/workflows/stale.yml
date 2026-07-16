@@ -10,14 +10,12 @@ permissions:
 
 jobs:
   stale:
-
-    permissions:
-      issues: write  # for actions/stale to close stale issues
-      pull-requests: write  # for actions/stale to close stale PRs
     runs-on: ubuntu-latest
-
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-      - uses: actions/stale@v1
+      - uses: actions/stale@v10
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: \
@@ -28,3 +26,4 @@ jobs:
 
           stale-issue-label: 'no-issue-activity'
           stale-pr-label: 'no-pr-activity'
+          exempt-issue-labels: 'long-term'

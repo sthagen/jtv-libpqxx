@@ -134,7 +134,7 @@ When you index a `result` or dereference a `result` iterator, you get a
 `row_ref`.  When you index a `row_ref` or `row` or dereference an iterator of
 either, you get a `field_ref`.
 
-Usually you'll deal with `row_ref` and `field_ref`.  These are effficient,
+Usually you'll deal with `row_ref` and `field_ref`.  These are efficient,
 cheap to copy, and straightforward.  All you really need to do is ensure that
 the `result` object does not move in memory, or get destroyed.
 
@@ -149,13 +149,21 @@ get destroyed so long as you stlil have a `row` or `field` referencing it.
 For example, your code might just read it as raw text using `c_str()`:
 
 ```cxx
-    pqxx::result r = tx.exec("SELECT * FROM mytable");
-    for (auto const &row_ref: r)
+    pqxx::result result = tx.exec("SELECT * FROM mytable");
+    for (auto const &row_ref: result)
     {
-       for (auto const &field_ref: row) std::cout << field.c_str() << '\t';
+       for (auto const &field_ref: row_ref)
+         std::cout << field_ref.c_str() << '\t';
        std::cout << '\n';
     }
 ```
+
+(Feel free to take `auto const row_ref`, so "pass-by-value" instead of
+`auto const &row_ref` (which is "pass-by-reference"), or even just
+`auto row_ref`.  The code in libpqxx itself generally takes these by reference
+because one of the static analysis tools used in its build process habitually
+insists on pass-by-reference "for efficiency."  But the whole point of these
+types is that they are efficient even when passed by value.)
 
 
 ### Data types
