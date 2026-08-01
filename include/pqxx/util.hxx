@@ -231,7 +231,7 @@ struct byte_char_traits final : std::char_traits<char>
   static int_type eof();
 };
 
-// Supress warnings from potentially using a deprecated generic
+// Suppress warnings from potentially using a deprecated generic
 // std::char_traits.
 // Necessary for libc++ 18.
 #include "pqxx/internal/ignore-deprecated-pre.hxx"

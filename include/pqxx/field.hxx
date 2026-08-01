@@ -485,7 +485,7 @@ public:
    * conversion fail with an exception, the exception will refer to this
    * function.  It's generally more helpful to pass a location that's more
    * meaningful in the context of your codebase, using the version of this
-   * function that takes it as a first argumet.
+   * function that takes it as a first argument.
    *
    * Returns whether the field was null.  If it was, it will not touch the
    * values in `fields`.
@@ -590,7 +590,7 @@ private:
   /// Constructor.
   field() noexcept = default;
 
-  /// Retun @ref field_ref for this field.
+  /// Return @ref field_ref for this field.
   /** @warning The @ref field_ref holds a reference to the @ref result
    * object _inside this `field` object._  So if you change that, the
    * @ref field_ref becomes invalid.

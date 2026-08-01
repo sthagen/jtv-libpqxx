@@ -232,7 +232,7 @@ pqxx::bytes unesc_bin(std::string_view escaped_data, sl loc)
 
 /// Persistent copies of libpqxx version information.
 /** These are not efficient.  They are stored here for one reason only: to
- * ensure that the libpqxx library binary contains its own version inforamtion,
+ * ensure that the libpqxx library binary contains its own version information,
  * even if the application code that calls libpqxx is compiled against a
  * different version.  (We allow some slight differences.)  That way we can
  * compare the binary version against the version that was in the headers.
@@ -244,7 +244,7 @@ volatile int const binary_major{version_major}, binary_minor{version_minor},
   binary_patch{version_patch};
 
 
-/// Peristent copy of libpqxx version string.
+/// Persistent copy of libpqxx version string.
 /** I'd like to make this `volatile`, but there are just too many complications
  * along the way.  Which is probably for the best.
  *

@@ -556,7 +556,7 @@ private:
    * `std::source_location` that might be useful to the application maintainer.
    *
    * Returns the first one available of: the creation location for this
-   * iterator's stream, the creeation location of the `other` iterator's
+   * iterator's stream, the creation location of the `other` iterator's
    * stream, or the immediate call site.
    */
   [[nodiscard]] sl

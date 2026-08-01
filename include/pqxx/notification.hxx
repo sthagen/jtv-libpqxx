@@ -61,7 +61,7 @@ class PQXX_LIBEXPORT PQXX_NOVTABLE notification_receiver
 public:
   /// Register the receiver with a connection.
   /**
-   * @param cx Connnection to operate on.
+   * @param cx Connection to operate on.
    * @param channel Name of the notification to listen for.
    */
   [[deprecated("Use pqxx::connection::listen() instead.")]]

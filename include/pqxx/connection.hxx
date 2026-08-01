@@ -532,7 +532,7 @@ public:
   /// Get the connection's encoding, as a PostgreSQL-defined code.
   [[nodiscard]] int encoding_id(sl = sl::current()) const;
 
-  /// Read the curent client encoding's @ref pqxx::encoding_group.
+  /// Read the current client encoding's @ref pqxx::encoding_group.
   [[nodiscard]] encoding_group get_encoding_group(sl loc = sl::current()) const
   {
     return pqxx::internal::enc_group(this->encoding_id(loc), loc);
@@ -671,7 +671,7 @@ public:
    * If your handler throws an exception, that will simply propagate up the
    * call chain to wherever you were when you received it.
    *
-   * This is differnt from the old `notification_receiver` mechanism which
+   * This is different from the old `notification_receiver` mechanism which
    * logged exceptions but did not propagate them.
    *
    *
@@ -787,8 +787,8 @@ public:
    *
    * The handler is a `std::function` (see @ref notification_handler), but you
    * can simply pass in a lambda with the right parameters, or a function, or
-   * an object of a type you define that happens to implemnt the right function
-   * call operator.
+   * an object of a type you define that happens to implement the right
+   * function call operator.
    *
    * Your handler probably needs to interact with your application's data; the
    * simple way to get that working is to pass a lambda with a closure

@@ -268,7 +268,7 @@ that exact version of the library rather than one found elsewhere on the
 system, and eliminate worries about the exact right version of the library
 being installed with your program..
 
-If you get a moderate number fo link errors which include a missing symbol
+If you get a moderate number of link errors which include a missing symbol
 `check_pqxx_version_X_Y` (where `X` and `Y` are numbers), that's typically a
 sign that you're linking to a different version of libpqxx than the one whose
 headers your compiler used while compiling.

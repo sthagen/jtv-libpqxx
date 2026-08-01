@@ -227,10 +227,10 @@ pqxx::internal::sql_cursor::difference_type pqxx::internal::sql_cursor::adjust(
       throw internal_error{"Cursor displacement larger than requested."};
 
     // If we see fewer rows than requested, then we've hit an end (on either
-    // side) of the result set.  Wether we make an extra step to a one-past-end
-    // position or whether we're already there depends on where we were
-    // previously: if our last move was in the same direction and also fell
-    // short, we're already at a one-past-end row.
+    // side) of the result set.  Whether we make an extra step to a
+    // one-past-end position or whether we're already there depends on where
+    // we were previously: if our last move was in the same direction and also
+    // fell short, we're already at a one-past-end row.
     if (m_at_end != direction)
       ++actual;
 
