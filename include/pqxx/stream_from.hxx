@@ -115,7 +115,7 @@ public:
    * table path and/or columns list, and you want to save a bit of work on
    * composing the internal SQL statement for starting the stream.  It lets you
    * compose the string representations for the table path and the columns
-   * list, so you can compute these once and then re-use them later.
+   * list, so you can compute these once and then reuse them later.
    *
    * @param tx The transaction within which the stream will operate.
    * @param path Name or path for the table upon which the stream will
@@ -348,6 +348,8 @@ template<typename Tuple, std::size_t index>
 inline void stream_from::extract_value(Tuple &t, sl loc) const
 {
   using field_type = std::remove_cvref_t<decltype(std::get<index>(t))>;
+  // clang-tidy rule bug:
+  // NOLINTNEXTLINE(cert-dcl03-c)
   assert(index < std::size(m_fields));
   if constexpr (always_null<field_type>())
   {

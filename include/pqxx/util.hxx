@@ -245,7 +245,7 @@ using bytes = std::vector<std::byte>;
 /// Cast binary data to a type that libpqxx will recognise as binary.
 /** There are many different formats for storing binary data in memory.  You
  * may have yours as a `std::string`, or a `std::vector<uchar_t>`, or one of
- * many other types.  In libpqxx we commend a container of `std::byte`.
+ * many other types.  In libpqxx we recommend a container of `std::byte`.
  *
  * For libpqxx to recognise your data as binary, we recommend using a
  * `pqxx::bytes`, or a `pqxx::bytes_view`; but any contiguous block of
@@ -339,6 +339,9 @@ template<c_source_location LOC>
 PQXX_PURE inline std::string source_loc(LOC const &loc)
 {
   char const *const file{loc.file_name()};
+
+  // clang-tidy rule bug:
+  // NOLINTNEXTLINE(cert-dcl03-c)
   assert(file != nullptr);
 
   char const *const func{loc.function_name()};
@@ -492,8 +495,11 @@ void check_unique_unregister(
 PQXX_PURE inline constexpr std::size_t
 size_esc_bin(std::size_t binary_bytes) noexcept
 {
+  // clang-tidy rule bug:
+  // NOLINTBEGIN(cert-dcl03-c)
   assert(std::cmp_less(
     binary_bytes, (std::numeric_limits<std::size_t>::max)() / 2u));
+  // NOLINTEND(cert-dcl03-c)
   return 2 + (2 * binary_bytes) + 1;
 }
 

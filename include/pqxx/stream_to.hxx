@@ -139,7 +139,7 @@ public:
    * path and/or columns list, and you want to save a bit of work on composing
    * the internal SQL statement for starting the stream.  It lets you compose
    * the string representations for the table path and the columns list, so you
-   * can compute these once and then re-use them later.
+   * can compute these once and then reuse them later.
    *
    * @param tx The transaction within which the stream will operate.
    * @param path Name or path for the table upon which the stream will
@@ -347,6 +347,8 @@ private:
         auto const data{m_buffer.data()};
         std::size_t const end{
           offset + into_buf({data + offset, data + total}, f, c)};
+        // clang-tidy rule bug:
+        // NOLINTNEXTLINE(cert-dcl03-c)
         assert((end + 1) < std::size(m_buffer));
         m_buffer[end] = '\t';
         // Shrink to fit.  Keep the tab though.

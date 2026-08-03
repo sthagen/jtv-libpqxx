@@ -47,6 +47,8 @@ constexpr T top{std::numeric_limits<T>::max()};
 template<pqxx::internal::integer T>
 constexpr inline char *nonneg_to_buf(char *end, T value)
 {
+  // clang-tidy rule bug:
+  // NOLINTNEXTLINE(cert-dcl03-c)
   assert(std::cmp_greater_equal(value, 0));
   constexpr int ten{10};
   // Seeming bug in clang-tidy rule: it thinks we can make pos a "char const *"
@@ -67,6 +69,8 @@ constexpr inline char *nonneg_to_buf(char *end, T value)
 template<pqxx::internal::integer T>
 constexpr inline char *neg_to_buf(char *end, T value)
 {
+  // clang-tidy rule bug:
+  // NOLINTNEXTLINE(cert-dcl03-c)
   assert(std::cmp_greater_equal(value, 0));
   // Seeming bug in clang-tidy rule: it thinks we can make pos a "char const *"
   // instead of a plain "char *".  I don't see how.
@@ -217,7 +221,7 @@ constexpr bool valid_infinity_string(std::string_view text) noexcept
 /** We use this to work around missing std::to_chars for floating-point types.
  *
  * Initialising the stream (including locale and tweaked precision) seems to
- * be expensive.  So, create thread-local instances which we re-use.  It's a
+ * be expensive.  So, create thread-local instances which we reuse.  It's a
  * lockless way of keeping global variables thread-safe, basically.
  *
  * The stream initialisation happens once per thread, in the constructor.

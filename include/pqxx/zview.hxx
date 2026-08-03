@@ -119,7 +119,7 @@ public:
   /// Construct a `zview` from a C-style string.
   /** @warning This scans the string to discover its length.  So if you need to
    * do it many times, it's probably better to create the `zview` once and
-   * re-use it.
+   * reuse it.
    */
   PQXX_ZARGS constexpr zview(char const str[]) noexcept(
     noexcept(std::string_view{str})) :
@@ -172,8 +172,11 @@ private:
   /// Check invariant: `data()` must be non-null and zero-terminated.
   [[maybe_unused]] constexpr void invariant() const noexcept
   {
+    // clang-tidy rule bug:
+    // NOLINTBEGIN(cert-dcl03-c)
     assert(std::data(*this) != nullptr);
     assert(std::data(*this)[std::size(*this)] == '\0');
+    // NOLINTEND(cert-dcl03-c)
   }
 };
 

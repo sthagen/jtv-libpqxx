@@ -109,6 +109,8 @@ public:
   /// Parse and convert the latest line of data we received.
   std::tuple<TYPE...> parse_line(std::string_view line) &
   {
+    // clang-tidy rule bug:
+    // NOLINTNEXTLINE(cert-dcl03-c)
     assert(not done());
 
     auto const line_size{std::size(line)};
@@ -133,6 +135,8 @@ public:
     // requested type.
     std::tuple<TYPE...> data{parse_field<TYPE>(line, offset, write, m_ctx)...};
 
+    // clang-tidy rule bug:
+    // NOLINTNEXTLINE(cert-dcl03-c)
     assert(offset == line_size + 1u);
     return data;
   }
@@ -170,21 +174,31 @@ private:
     auto const line_size{std::size(line)};
 #endif
 
+    // clang-tidy rule bug:
+    // NOLINTNEXTLINE(cert-dcl03-c)
     assert(offset <= line_size);
 
     char const *lp{std::data(line)};
 
     // The COPY line now ends in a tab.  (We replace the trailing newline with
     // that to simplify the loop here.)
+
+    // clang-tidy rule bug:
+    // NOLINTBEGIN(cert-dcl03-c)
     assert(lp[line_size] == '\t');
     assert(lp[line_size + 1] == '\0');
+    // NOLINTEND(cert-dcl03-c)
 
     if ((lp[offset] == '\\') and (lp[offset + 1] == 'N'))
     {
       // Null field.  Consume the "\N" and the field separator.
       offset += 3;
+      // clang-tidy rule bug:
+      // NOLINTBEGIN(cert-dcl03-c)
       assert(offset <= (line_size + 1));
       assert(lp[offset - 1] == '\t');
+      // NOLINTEND(cert-dcl03-c)
+
       // Return a null value.  There's nothing to write into m_row.
       return {offset, write, {}};
     }
@@ -201,6 +215,8 @@ private:
     // Effectively, the newline acts as a final field separator.
     while (lp[offset] != '\t')
     {
+      // clang-tidy rule bug:
+      // NOLINTNEXTLINE(cert-dcl03-c)
       assert(lp[offset] != '\0');
 
       // Beginning of the next character of interest (or the end of the line).
@@ -209,6 +225,8 @@ private:
       // previous character of interest.
       auto const stop_char{m_char_finder(line, offset, c.loc)};
       PQXX_ASSUME(stop_char >= offset);
+      // clang-tidy rule bug:
+      // NOLINTNEXTLINE(cert-dcl03-c)
       assert(stop_char < (line_size + 1));
 
       // Copy the text we have so far.  It's got no special characters in it.
@@ -223,6 +241,8 @@ private:
         // Escape sequence.
         // Consume the backslash.
         ++offset;
+        // clang-tidy rule bug:
+        // NOLINTNEXTLINE(cert-dcl03-c)
         assert(offset < line_size);
 
         // The database will only escape ASCII characters, so we assume that
@@ -232,6 +252,9 @@ private:
         // I think this is a valid way to check for the high bit: the shift
         // may be signed or unsigned (implementation-defined for char), but
         // either way we get a zero if the bit is clear or nonzero if it's set.
+
+        // clang-tidy rule bug:
+        // NOLINTNEXTLINE(cert-dcl03-c)
         assert((escaped >> 7) == 0);
         ++offset;
         *write++ = unescape_char(escaped);
@@ -239,11 +262,16 @@ private:
       else
       {
         // Field separator.  Fall out of the loop.
+        // clang-tidy rule bug:
+        // NOLINTNEXTLINE(cert-dcl03-c)
         assert(special == '\t');
       }
     }
 
     // Hit the end of the field.
+
+    // clang-tidy rule bug:
+    // NOLINTNEXTLINE(cert-dcl03-c)
     assert(lp[offset] == '\t');
     *write = '\0';
     ++write;
@@ -274,6 +302,8 @@ private:
   {
     using field_type = std::remove_cvref_t<TARGET>;
 
+    // clang-tidy rule bug:
+    // NOLINTNEXTLINE(cert-dcl03-c)
     assert(offset <= std::size(line));
 
     auto [new_offset, new_write, text]{read_field(line, offset, write, c)};
@@ -321,7 +351,7 @@ private:
 
   /// Current row's fields' text, combined into one reusable string.
   /** We carry this buffer over from one invocation to the next, not because we
-   * need the data, but just so we can re-use the space.  It saves us having to
+   * need the data, but just so we can reuse the space.  It saves us having to
    * re-allocate it every time.
    */
   std::string m_row;

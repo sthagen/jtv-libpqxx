@@ -9,15 +9,14 @@ Reads the test libpqxx feature macro names, as well as the C++ feature check
 macros that control them, from cxx_features.txt in the source tree.
 """
 
+import os.path
 from argparse import (
     ArgumentParser,
     Namespace,
 )
-import os.path
 from pathlib import Path
 from textwrap import dedent
 from typing import cast
-
 
 # Name of the config file listing, one per line, the macros to test and set.
 #
@@ -27,10 +26,10 @@ from typing import cast
 # * a tuple of macro names.
 #
 # In that last case, the line must consist of a libpqxx feature macro name
-# (which the configuration will either define or not define depening on whether
-# there is support for the corresponding feature), followed by the name of the
-# C++ feature test macro that we will need to check in order to determinue
-# whether that feature is present.
+# (which the configuration will either define or not define depending on
+# whether there is support for the corresponding feature), followed by the
+# name of the C++ feature test macro that we will need to check in order to
+# determine whether that feature is present.
 CONFIG = "cxx_features.txt"
 
 
